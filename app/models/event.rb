@@ -1,5 +1,6 @@
 class Event < ApplicationRecord
-
+  belongs_to :user
+  
   validates_presence_of :start_datetime, :location
   validates :title, length: { minimum: 3 }
   validate :start_datetime_cannot_be_in_the_past
