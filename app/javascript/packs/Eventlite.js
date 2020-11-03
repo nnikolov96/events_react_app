@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import axios from 'axios'
 import EventList from './EventList'
 import EventForm from './EventForm'
+import FormErrors from './FormErrors'
 
 class Eventlite extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Eventlite extends React.Component {
       title: "",
       start_datetime: "",
       location: "",
+      formErrors: {}
     };
   }
 
@@ -37,7 +39,7 @@ class Eventlite extends React.Component {
         this.addNewEvent(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({formErrors: error.response.data})
       });
   };
 
@@ -51,6 +53,7 @@ class Eventlite extends React.Component {
   render() {
     return (
       <div>
+        <FormErrors formErrors = { this.state.formErrors }/>
         <EventForm
           handleSubmit={this.handleSubmit}
           handleInput={this.handleInput}
