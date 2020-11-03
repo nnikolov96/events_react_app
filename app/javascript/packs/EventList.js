@@ -3,9 +3,9 @@ import Event from './Event';
 
 const EventList = props => (
   <div>
-    {props.events.map(function (event, i) {
+    {props.events.map(function (event) {
       return (
-        <Event key={i} event = {event}/>
+        <Event key={event.id} event = {event}/>
       )
     })}
   </div>
