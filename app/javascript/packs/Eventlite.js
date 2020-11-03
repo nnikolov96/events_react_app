@@ -40,27 +40,29 @@ class Eventlite extends React.Component {
   validateField(fieldName, fieldValue) {
     let fieldValid = true;
     let errors = [];
+    let fieldError = '';
     switch (fieldName) {
       case "title":
-        if (fieldValue.length <= 2) {
-          errors = errors.concat(["is too short (minimum is 3 characters)"]);
-          fieldValid = false;
+        [fieldValid, fieldError] = validations.checkMinLength(fieldValue, 3);
+        if (!fieldValid) {
+          errors = errors.concat([fieldError]);
         }
         break;
 
       case "location":
-        if (fieldValue.length === 0) {
-          errors = errors.concat(["can't be blank"]);
-          fieldValid = false;
+        [fieldValid, fieldError] = validations.checkMinLength(fieldValue, 1)
+        if (!fieldValid) {
+          errors = errors.concat([fieldError]);
         }
         break;
       case "start_datetime":
-        if (fieldValue.length === 0) {
-          errors = errors.concat(["can't be blank"]);
-          fieldValid = false;
-        } else if (Date.parse(fieldValue) <= Date.now()) {
-          errors = errors.concat(["can't be in the past"]);
-          fieldValid = false;
+        [fieldValid, fieldError] = validations.checkMinLength(fieldValue, 1);
+        if (!fieldValid) {
+          errors = errors.concat([fieldError]);
+        }
+        [fieldValid, fieldError] = validations.timeShouldBeInTheFuture(fieldValue);
+        if (!fieldValid) {
+          errors = errors.concat([fieldError]);
         }
         break;
     }
