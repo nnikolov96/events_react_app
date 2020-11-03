@@ -23,7 +23,7 @@ class Eventlite extends React.Component {
     const name = e.target.name;
     const newState = {};
     newState[name] = e.target.value;
-    this.setState(newState, tihs.validateForm);
+    this.setState(newState, this.validateForm);
   };
 
   validateForm() { 
