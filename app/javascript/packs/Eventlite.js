@@ -4,6 +4,7 @@ import axios from 'axios'
 import EventList from './EventList'
 import EventForm from './EventForm'
 import FormErrors from './FormErrors'
+import validations from '../validations'
 
 class Eventlite extends React.Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class Eventlite extends React.Component {
     newState[name] = { ...this.state[name], value: value };
     this.setState(newState, () => this.validateField(name, value));
   };
-  
+
   validateForm() {
     this.setState({
       formValid:
