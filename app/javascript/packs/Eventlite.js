@@ -13,6 +13,7 @@ class Eventlite extends React.Component {
       title: "",
       start_datetime: "",
       location: "",
+      formValid: false,
       formErrors: {}
     };
   }
@@ -22,8 +23,17 @@ class Eventlite extends React.Component {
     const name = e.target.name;
     const newState = {};
     newState[name] = e.target.value;
-    this.setState(newState);
+    this.setState(newState, tihs.validateForm);
   };
+
+  validateForm() { 
+    this.setState({
+      formValid: 
+        this.state.location.length > 0 &&
+        this.state.title.length > 2 &&
+        Date.parse(this.state.start_datetime) > Date.now()
+    })
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -58,13 +68,14 @@ class Eventlite extends React.Component {
   render() {
     return (
       <div>
-        <FormErrors formErrors = { this.state.formErrors }/>
+        <FormErrors formErrors={this.state.formErrors} />
         <EventForm
           handleSubmit={this.handleSubmit}
           handleInput={this.handleInput}
           title={this.state.title}
           start_datetime={this.state.start_datetime}
           location={this.state.location}
+          formValid={this.state.formValid}
         />
         <EventList events={this.state.events} />
       </div>
